@@ -1,0 +1,112 @@
+  <!DOCTYPE html>
+<html>
+<head>
+    <script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous">
+    </script>
+</head>
+<body onload = "generateArray()">
+    <style>  
+        body {
+                background-image: url("Macalania.gif");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                 }
+        h1 {    font-size: 30px;
+                color: crimson;
+                padding-bottom: 5px;
+                }
+        h2 {    font-size: 30px;
+                color: crimson;
+                padding-bottom: 5px;
+                }
+        p  {color: red;}
+        button { 
+                 padding: 15px 32px;
+                 border: white;
+                 background-color: white;
+                 font-size: 18px;
+                 color: black;
+                 cursor: pointer;
+                 }
+        textarea {
+            border-style: double;
+        }
+     </style>
+
+<h1><center>MUSIC BOX</center></h1>
+
+<center><textarea id="notes" rows="8" cols="120">
+C3 D2 E2 G2 C3 D3 E3 G3 C4 D4 E4 G4 C5 D5 E5 G5 C6 G5 E5 D5 C5 G4 E4 D4 C4 G3 E3 D3 C3 G2 E2 D2 
+A2 B2 C3 A2 B2 C3 E3 A3 B3 C4 E4 A4 B4 C5 E5 A5 E5 C5 B4 A4 E4 C4 B3 A3 E3 C3 B2 A2 E2 C3 B2 
+C3 D2 E2 G2 C3 D3 E3 G3 C4 D4 E3 G4 C5 D5 E5 G5 C6 G5 E5 D5 C5 G4 E4 D4 C4 G3 E3 D3 C3 G2 E2 D2 
+A2 B2 C3 E2 A2 B2 C3 E3 A3 B3 C4 E4 A4 B4 C5 E5 A5 E5 C5 B4 A4 E4 C4 B3 A3 E3 C3 B2 A2 E2 C3 B2 
+A2 F2 G2 A2 C3 F3 G3 A3 C4 F4 G4 A4 C5 F5 G5 A5 G5 F5 C5 A4 G4 F4 C4 A3 G3 F3 C3 A2 G2 F2 C3 
+B2 D2 G2 A2 B2 D3 G3 A3 B3 D4 G4 A4 B4 D5 G5 A5 B5 A5 G5 D5 B4 A4 G4 D4 B3 A3 G3 D3 B2 A2 G2 D2 
+Ab2 Eb2 G2 Ab2 C3 Eb3 G3 Ab3 C4 Eb4 G4 Ab4 C5 Eb5 G5 Ab5 G5 Eb5 C5 Ab4 G4 Eb4 C4 Ab3 G3 Eb3 C3 Ab2 G2 Eb2 C3 
+Bb2 D2 F2 A2 Bb2 D3 F3 A3 Bb3 D4 F4 A4 Bb4 D5 F5 A5 Bb5 A5 F5 D5 Bb4 A4 F4 D4 Bb3 A3 F3 D3 Bb2 A2 F2 D2 
+</textarea></center>
+
+
+<h2 ><center>COMPILED CODE</center></h2>
+
+<div style="text-align: center">
+
+    <textarea id="compiledCodeBox" class="form-control" rows="10" cols="120" placeholder="" autocomplete="off"></textarea>
+
+</div>
+<center>
+<button id="button1" onclick="Play()">Play</button>
+<button id="button2" onclick="Compile()">Compile</button>
+</center>
+
+<script>
+    //by Adam Salinggih
+    //CS351 FALL2020 CSUSM
+    var notesArray = [];
+    notesString = $("#notes").val().split(" ");
+
+    for(i = 0; i < notesString.length; i++){
+        notesArray.push(notesString[i]);
+    }
+
+    function Compile(){
+        var code = "";
+        var audioCode = "";
+        code += "<!DOCTYPE html>";
+        code += "<html lang =\"en\">";
+        code += "<html>";
+        code += "<body>";
+        code += "<h1>Music Box</h1>";
+        code += "<button id=\"button1\" onclick=\"Play()\">Play</button>"
+        code += "<script>";
+        code += "function Play(){";
+        code += "@@@PLAY_MUSIC";
+        code += "}";
+        code += "<\/script>";
+        code += "</body>";
+        code += "</html>";
+
+        for(i = 0; i < notesArray.length - 1; i++){
+            audioCode += "setTimeout(function() {(new Audio(" +"\"" + notesArray[i] + "\"" + " + \".mp3\")).play();},"+ i +"*175);\n";        
+        }
+        code = code.replace("@@@PLAY_MUSIC", audioCode);
+        var comBox = document.getElementById("compiledCodeBox");
+        comBox.value = code;
+    }
+
+    function Play(){
+        var index = 0;
+        notesArray.forEach(function(note) {setTimeout(function() {
+                    (new Audio(note + ".mp3")).play();
+                }, index * 175); index++;
+        });
+    }
+
+</script>
+
+</body>
+</html>`
